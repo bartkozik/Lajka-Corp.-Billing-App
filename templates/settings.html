@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+<ul class="list-group">
+
+    <li class="list-group-item list-group-item-primary">
+        <a class="list-group-item" href="{% url 'artist_list' %}">Artyści Total</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'income_all' %}">Raporty Total</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'storeroom' %}">Magazyn Total</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'add_income' %}">Dodaj Raport</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'add_album' %}">Dodaj Album</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'add_distro' %}">Dodaj Dystrybucję</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'add_storeroom' %}">Ustaw Magazyn</a>
+    </li>
+    <li class="list-group-item list-group-item-primary">
+        <a class="nav-link" href="{% url 'add_inc_split' %}">Ustal Podział Zysku</a>
+    </li>
+    <li class="list-group-item list-group-item-danger">
+        <a class="nav-link" href="{% url 'add_user' %}">Rejestracja Użytkownika</a>
+    </li>
+    <li class="list-group-item list-group-item-danger">
+        <a class="nav-link" href="{% url 'add_artist' %}">Uprawnienia Dostępu</a>
+    </li>
+</ul>
+</div>
+
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'index' %}">Home</a>
+    </button>
+</div>
+{#<li class="nav-item">#}
+{#    <a class="nav-link" href="{% url 'add_user' %}">Zarejestruj</a>#}
+{#</li>#}
+
+{% endblock %}

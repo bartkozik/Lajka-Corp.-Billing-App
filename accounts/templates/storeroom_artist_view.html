@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Stan Magazynowy</h3>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+        <th>Lp</th>
+        <th>Artist/Album</th>
+        <th>Nośnik</th>
+        <th>Ilość</th>
+{#        <th>Action</th>#}
+    </tr>
+  </thead>
+    {% for item in storeroom %}
+        <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.album }}</td>
+        <td>{{ item.carrier_type }}</td>
+            <td>{{ item.amount }}</td>
+{#        <td><a href="{% url 'update_storeroom' item.id %}">Edytuj</a> </td>#}
+{#            <td><a type="button" class="btn btn-light" href="{% url 'delete_storeroom' item.id %}">Usuń Pozycję</a> </td>#}
+{#        <td><form action="{% url 'add_artist' item.id %}" method="post"> {% csrf_token %}<input type="text" name="text"><input type="submit"></form> </td>#}
+    </tr>
+    {% endfor %}
+
+    </table>
+
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'settings' %}">Back</a>
+    </button>
+</div>
+
+{% endblock %}

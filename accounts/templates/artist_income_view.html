@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Raporty Sprzedaży</h3>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+        <th>#</th>
+        <th>Kanał dystrybucji</th>
+        <th>Album</th>
+        <th>Wolumen</th>
+        <th>Przychód</th>
+        <th>Miesiąc sprzedaży</th>
+        <th>Przychody łącznie: {{ total_inc }}</th>
+    </tr>
+  </thead>
+    {%  for income in incomes %}
+        <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ income.chanel.name }}</td>
+        <td>{{ income.album }}</td>
+            <td>{{ income.volume }}</td>
+            <td>{{ income.income }}</td>
+            <td>{{ income.month }} </td>
+{#        <td><a href="{% url 'update_storeroom' item.id %}">Edytuj</a> </td>#}
+{#            <td><a type="button" class="btn btn-light" href="{% url 'delete_storeroom' item.id %}">Usuń Pozycję</a> </td>#}
+{#        <td><form action="{% url 'add_artist' item.id %}" method="post"> {% csrf_token %}<input type="text" name="text"><input type="submit"></form> </td>#}
+    </tr>
+    {% endfor %}
+
+    </table>
+
+    </ul>
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'index' %}">Back</a>
+    </button>
+</div>
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,8 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div>
+        {% include 'accounts/login_panel.html' %}
+    </div>
+    {% if user.is_authenticated %}
+        {% include 'links.html' %}
+    {% endif %}
+</nav>

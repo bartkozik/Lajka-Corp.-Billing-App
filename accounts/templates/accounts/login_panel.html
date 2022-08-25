@@ -1,0 +1,13 @@
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Zaloguj</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Artyści i wydania</h3>
+    <table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Lp</th>
+        <th scope="col">Artist</th>
+        <th scope="col">Album Title</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    {% for item in artists %}
+        <thead class="thead-dark">
+        <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.author }}</td>
+        <td>{{ item.title }}</td>
+        <td><a type="button" class="btn btn-light" href="{% url 'update_artist' item.id %}">Edytuj Uprawnienia Dostępu</a> </td>
+{#            <td><a href="{% url 'delete_artist' item.id %}">Usuń Artystę</a> </td>#}
+
+    </tr>
+        </thead>
+    {% endfor %}
+
+    </table>
+
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'settings' %}">Back</a>
+    </button>
+</div>
+
+
+{% endblock %}

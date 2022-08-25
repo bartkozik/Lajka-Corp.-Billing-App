@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Raporty Sprzedaży</h3>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+        <th>#</th>
+        <th>Kanał dystrybucji</th>
+        <th>Album</th>
+        <th>Wolumen</th>
+        <th>Przychód</th>
+        <th>Miesiąc sprzedaży</th>
+        <th>Przychody łącznie: {{ total_inc }}</th>
+    </tr>
+  </thead>
+    {%  for income in incomes %}
+        <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ income.chanel.name }}</td>
+        <td>{{ income.album }}</td>
+            <td>{{ income.volume }}</td>
+            <td>{{ income.income }}</td>
+            <td>{{ income.get_month2_display }} </td>
+            <td><a type="button" class="btn btn-light" href="{% url 'update_income' income.id %}"> Modyfikuj raport</a></li><br>
+        <a type="button" class="btn btn-light" href="{% url 'delete_income' income.id %}"> Usuń raport</a></li><br>
+        </td>
+
+    </tr>
+    {% endfor %}
+
+    </table>
+
+    </ul>
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'settings' %}">Back</a>
+    </button>
+</div>
+
+{% endblock %}
+
+
+
+

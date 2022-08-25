@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save">
+</form>
+
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning">
+        <a href="{% url 'income_all' %}">Back</a>
+    </button>
+</div>
+
+{% endblock %}

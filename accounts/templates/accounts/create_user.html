@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include 'form.html' %}
+
+<div class="input-group-append">
+    <button type="button" class="btn btn-warning" type="submit" id="basic-addon2">
+        <a href="{% url 'settings' %}">Back</a>
+    </button>
+</div>
+{% endblock %}
