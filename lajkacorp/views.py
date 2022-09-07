@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.http import HttpResponse
@@ -14,16 +13,16 @@ from lajkacorp.forms import AddUserForm, AddAlbumForm, AddIncomeForm, AddStorero
 from lajkacorp.models import User, MusicAlbum, Storeroom, Distribution, Message, Income, ArtistIncomeSpliter
 
 
-class ArtistAlbumsListView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    permission_required = []
+class ArtistAlbumsListView(PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         albums = MusicAlbum.objects.all().order_by('author')
         return render(request, 'artist_card_view.html', {'artists': albums})
 
 
-class AddArtistView(LoginRequiredMixin, View):
-    permission_required = []
+class AddArtistView(PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddUserForm()
@@ -38,21 +37,21 @@ class AddArtistView(LoginRequiredMixin, View):
 
 
 class ArtistUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = User
     fields = '__all__'
     template_name = 'user_update_form.html'
 
 
 class ArtistDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = User
     success_url = reverse_lazy('settings')
     template_name = 'user_confirm_delete.html'
 
 
 class AddAlbumView(PermissionRequiredMixin, View):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddAlbumForm()
@@ -67,13 +66,13 @@ class AddAlbumView(PermissionRequiredMixin, View):
 
 
 class DeleteAlbumView(PermissionRequiredMixin, DeleteView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = MusicAlbum
     success_url = reverse_lazy('settings')
 
 
 class AddIncomeView(PermissionRequiredMixin, View):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddIncomeForm()
@@ -87,21 +86,21 @@ class AddIncomeView(PermissionRequiredMixin, View):
         return render(request, 'add_new.html', {'form': form})
 
 
-class IncomeListView(PermissionRequiredMixin, View):
-    permission_required = []
+class IncomeListView(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
         albums = MusicAlbum.objects.filter(author=user)
         incomes = Income.objects.filter(album__in=albums)
         incomes_total = sum(incomes.values_list('income', flat=True))
+        # agregate
 
         return render(request, 'artist_income_view.html',
                       {'incomes': incomes, 'total_inc': incomes_total})
 
 
-class IncomeListViewAll(LoginRequiredMixin,PermissionRequiredMixin, View):
-    permission_required = []
+class IncomeListViewAll(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         incomes = Income.objects.all().order_by('month2')
@@ -111,7 +110,7 @@ class IncomeListViewAll(LoginRequiredMixin,PermissionRequiredMixin, View):
 
 
 class IncomeUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = Income
     fields = '__all__'
     success_url = reverse_lazy('income_all')
@@ -119,13 +118,14 @@ class IncomeUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 class IncomeDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = Income
     success_url = reverse_lazy('index')
     template_name = 'income_confirm_delete.html'
 
 
-class AddStoreRoomView(View):
+class AddStoreRoomView(PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddStoreroomForm()
@@ -139,20 +139,23 @@ class AddStoreRoomView(View):
         return render(request, 'add_new.html', {'form': form})
 
 
-class UpdateStoreRoomView(UpdateView):
+class UpdateStoreRoomView(PermissionRequiredMixin, UpdateView):
+    permission_required = ['lajkacorp.view_contenttype']
+
     model = Storeroom
     fields = '__all__'
     template_name_suffix = '_update_form'
 
 
 class DeleteStoreRoomView(PermissionRequiredMixin, DeleteView):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
     model = Storeroom
     success_url = reverse_lazy('settings')
     template_name = 'storeroom_confirm_delete.html'
 
 
-class AddDistroView(View):
+class AddDistroView(PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddDistroForm()
@@ -170,7 +173,8 @@ class MessageDetailView(View):
     pass
 
 
-class AddIncomeSpliter(View):
+class AddIncomeSpliter(PermissionRequiredMixin, View):
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
         form = AddIncomeSpliterForm()
@@ -185,21 +189,21 @@ class AddIncomeSpliter(View):
 
 
 class SettingsView(PermissionRequiredMixin, View):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype', ]
 
     def get(self, request):
         return render(request, 'settings.html')
 
 
 class StoreRoomView(PermissionRequiredMixin, View):
-    permission_required = []
+    permission_required = ['lajkacorp.view_contenttype']
 
     def get(self, request):
-        storeroom = Storeroom.objects.all()
+        storeroom = Storeroom.objects.all().order_by('album')
         return render(request, 'storeroom_view.html', {'storeroom': storeroom})
 
 
-class StoreroomUserView(View):
+class StoreroomUserView(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
@@ -207,11 +211,3 @@ class StoreroomUserView(View):
         storeroom_all = Storeroom.objects.filter(album__in=albums)
         return render(request, 'storeroom_artist_view.html',
                       {'storeroom': storeroom_all})
-
-
-# permision = ['lajkacorp.view_artistincomespliter','lajkacorp.delete_artistincomespliter','lajkacorp.change_artistincomespliter','lajkacorp.add_artistincomespliter','lajkacorp.view_income','lajkacorp.delete_income',
-#                            'lajkacorp.change_income','lajkacorp.add_income','lajkacorp.view_message','lajkacorp.delete_message','lajkacorp.change_message','lajkacorp.add_message',
-#                            'lajkacorp.view_storeroom','lajkacorp.delete_storeroom','lajkacorp.change_storeroom','lajkacorp.add_storeroom','lajkacorp.view_musicalbum','lajkacorp.delete_distribution',
-#                            'lajkacorp.delete_musicalbum','lajkacorp.change_musicalbum','lajkacorp.add_musicalbum','lajkacorp.view_distribution','lajkacorp.','lajkacorp.',
-#                            'lajkacorp.change_distribution','lajkacorp.add_distribution','lajkacorp.view_session','lajkacorp.delete_session','lajkacorp.change_session','lajkacorp.add_session','lajkacorp.view_contenttype','lajkacorp.delete_contenttype','lajkacorp.change_contenttype','lajkacorp.add_contenttype','lajkacorp.view_user','lajkacorp.delete_user','lajkacorp.change_user','lajkacorp.add_user','lajkacorp.view_group',
-#                            'lajkacorp.delete_group','lajkacorp.change_group','lajkacorp.add_group','lajkacorp.view_permission','lajkacorp.delete_permission','lajkacorp.change_permission','lajkacorp.add_permission','lajkacorp.view_logentry','lajkacorp.delete_logentry','lajkacorp.change_logentry','lajkacorp.add_logentry',]
