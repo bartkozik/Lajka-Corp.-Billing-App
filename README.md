@@ -1,3 +1,3 @@
-# Lajka Corp. APP is simple accounting web app designed in Django for music Label use.  
+# Lajka Corp. APP is simple accounting WEB App designed in Django for music Label use.  
 
-Projekt zaliczeniowy do kursu Coders Lab
+CRUD App (Django)
