@@ -22,7 +22,6 @@ urlpatterns = [
     path('update_storeroom/<int:pk>/', views.UpdateStoreRoomView.as_view(), name='update_storeroom'),
     path('delete_storeroom/<int:pk>/', views.DeleteStoreRoomView.as_view(), name='delete_storeroom'),
     path('add_distro_chanel/', views.AddDistroView.as_view(), name='add_distro'),
-    # path('message/', views.MessageDetailView.as_view(), name='message'),
     path('settings/income_spliter/', views.AddIncomeSpliter.as_view(), name='add_inc_split'),
 
 
